@@ -13,11 +13,10 @@ return new class extends Migration
     {
         Schema::create('sections', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->fulltext();
+            $table->string('title')->index();
             $table->bigInteger('parent_id')->index()->nullable();
             $table->timestamps();
             $table->softDeletes();
-            $table->index('created_at');
         });
     }
 

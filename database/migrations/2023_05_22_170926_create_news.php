@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('news', function (Blueprint $table) {
             $table->id();
-            $table->string('title', 255)->fulltext();
-            $table->string('description', 512)->fulltext();
-            $table->text('text')->fulltext();
+            $table->string('title', 255);
+            $table->string('description', 512);
+            $table->text('text');
             $table->timestamps();
             $table->fullText(['title', 'description', 'text']);
             $table->softDeletes();
