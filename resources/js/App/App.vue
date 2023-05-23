@@ -14,7 +14,9 @@
             <Pagination v-if="loaded" :links="pages" @page-select="handleChangePage"></Pagination>
         </div>
         <div class="col col-sm-12 col-md-4">
-            <SectionBox :section-list="sectionList" @section-list-update="handleUpdateSectionList" @section-select="handleSectionSelect"></SectionBox>
+            <SectionBox :current-section="currentSection" :section-list="sectionList"
+                        @section-list-update="handleUpdateSectionList"
+                        @section-select="handleSectionSelect"></SectionBox>
         </div>
     </div>
 </template>
@@ -25,6 +27,7 @@ import NewsBox from "./NewsBox/NewsBox.vue";
 import SectionBox from "./SectionBox/SectionBox.vue";
 import Pagination from "./NewsBox/Pagination.vue";
 import Loader from "./Loader/Loader.vue";
+
 export default {
     name: "App",
     components: {Loader, Pagination, SectionBox, NewsBox, SearchBox},

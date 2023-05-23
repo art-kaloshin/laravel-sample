@@ -1,6 +1,7 @@
 <template>
     <div :key="section.id" class="sectionList clearfix mb-1">
-        <span class="link-info" @click.prevent="handleSectionSelect(section)">{{ section.title }}</span>
+        <span :class="{active: currentSection === section.id}" class="link-info"
+              @click.prevent="handleSectionSelect(section)">{{ section.title }}</span>
         <button class="btn btn-primary btn-sm mx-1 float-end" @click="handleEdit(section)">Edit</button>
         <button class="btn btn-danger btn-sm mx-1 float-end" @click="handleDelete(section)">Delete</button>
 
@@ -8,6 +9,7 @@
         <SectionElement
             v-for="childSection in section.children"
             :section="childSection"
+            :current-section="currentSection"
             @section-edit="handleEdit"
             @section-delete="handleDelete"
             @section-select="handleSectionSelect"
@@ -19,7 +21,7 @@
 <script>
 export default {
     name: "SectionElement",
-    props: ["section"],
+    props: ["section", "currentSection"],
     emits: ["sectionSelect", "sectionEdit", "sectionDelete"],
     methods: {
         handleSectionSelect(section) {
@@ -36,5 +38,7 @@ export default {
 </script>
 
 <style scoped>
-
+.active {
+    font-weight: bold;
+}
 </style>

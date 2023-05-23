@@ -3,10 +3,10 @@
         Categories
         <button class="btn btn-primary float-end btn-sm" @click="handleCreate">Create</button>
     </h2>
-
     <SectionElement
         v-for="section in sectionList"
         :section="section"
+        :current-section="currentSection"
         @section-edit="handleEdit"
         @section-delete="handleDelete"
         @section-select="handleSectionSelect"
@@ -18,10 +18,11 @@
 <script>
 import SectionEdit from "./SectionEdit.vue";
 import SectionElement from "./SectionElement.vue";
+
 export default {
     name: "SectionBox",
     components: {SectionElement, SectionEdit},
-    props: ["sectionList"],
+    props: ["sectionList", "currentSection"],
     emits: ["sectionSelect", "sectionListUpdate"],
     data() {
         return {
@@ -55,7 +56,7 @@ export default {
             }
         },
         handleDelete(section) {
-            axios.delete('/api/section/' + section.id).then((r) => {
+            axios.delete('/api/section/' + section.id).then(() => {
                 this.$emit('sectionListUpdate');
             });
         },
