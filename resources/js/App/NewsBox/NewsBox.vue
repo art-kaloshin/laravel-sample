@@ -7,12 +7,14 @@
         <NewsElement :news="news" @news-delete="handleDelete" @news-edit="handleEdit"/>
     </template>
 
-    <NewsEdit v-if="showForm" :news="editNews" :section-list="sectionList" :key="editNews" @cancel-edit="handleCancel" @save-news="handleSave"/>
+    <NewsEdit v-if="showForm" :key="editNews" :news="editNews" :section-list="sectionList" @cancel-edit="handleCancel"
+              @save-news="handleSave" @save-news-sync="handleSaveSync"/>
 </template>
 
 <script>
 import NewsElement from "./NewsElement.vue";
 import NewsEdit from "./NewsEdit.vue";
+
 export default {
     name: "NewsBox",
     components: {NewsEdit, NewsElement},
@@ -43,6 +45,7 @@ export default {
         },
         handleSave(news) {
             this.showForm = false;
+            console.log('Async save ;)');
 
             if (!!news.id) {
                 axios.put('/api/news/' + news.id, news).then(() => {
@@ -54,7 +57,18 @@ export default {
                 });
             }
         },
+        async handleSaveSync(news) {
+            this.showForm = false;
+            console.log('Sync save ;)');
 
+            if (!!news.id) {
+                await axios.put('/api/news/' + news.id, news);
+                this.$emit('newsListUpdate');
+            } else {
+                await axios.post('/api/news', news);
+                this.$emit('newsListUpdate');
+            }
+        },
     }
 }
 </script>
